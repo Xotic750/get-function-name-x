@@ -44,7 +44,19 @@
             function () {},
             function test() {},
             /*jshint evil:true */
-            new Function()
+            new Function(),
+            /*jshint evil:false */
+            function test1(){},
+            function test2 (){},
+            function test3( ) { },
+            function test4 ( ) { },
+            function/*foo*/test5(){},
+            function/*foo*/test6/*bar*/(){},
+            function/*foo*/test7/*bar*/(/*baz*/){},
+            /*fum*/function/*foo*/ // blah
+            test8/*bar*/ // wizz
+            (/*baz*/
+             ){},
           ],
           expected = [
             'Object',
@@ -55,10 +67,32 @@
             'Function',
             '',
             'test',
-            ''
+            '',
+            'test1',
+            'test2',
+            'test3',
+            'test4',
+            'test5',
+            'test6',
+            'test7',
+            'test8'
           ],
           actual = values.map(getFunctionName);
       expect(actual).toEqual(expected);
+
+      var fat;
+      try {
+        /*jshint evil:true */
+        fat = eval('(0,() => {return this})');
+        expect(getFunctionName(fat)).toBe('');
+      } catch (ignore) {}
+
+      var gen;
+      try {
+        /*jshint evil:true */
+        gen = eval('(0,function* idMaker(){})');
+        expect(getFunctionName(gen)).toBe('idMaker');
+      } catch (ignore) {}
     });
   });
 }());
