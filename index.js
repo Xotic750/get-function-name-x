@@ -41,7 +41,7 @@
  * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
  * behave as closely as possible to ECMAScript 6 (Harmony).
  *
- * @version 1.0.3
+ * @version 1.0.4
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -62,12 +62,18 @@
   'use strict';
 
   var ES = require('es-abstract/es6'),
+    s = require('white-space-x')(false, s),
     pFunctionToString, pMatch, reName, getFnName;
 
   if ((function test() {}).name !== 'test') {
     pFunctionToString = Function.prototype.toString;
     pMatch = String.prototype.match;
-    reName = [/^\s*function\s*\*?\s+([\w\$]+)\s*\(/i];
+    reName = [
+      new RegExp(
+        '^[' + s + ']*function[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*\\(',
+        'i'
+      )
+    ];
     getFnName = function getName(fn) {
       var name = ES.Call(pMatch, ES.Call(pFunctionToString, fn), reName);
       if (name) {
