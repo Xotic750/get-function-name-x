@@ -41,7 +41,7 @@
  * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
  * behave as closely as possible to ECMAScript 6 (Harmony).
  *
- * @version 1.0.4
+ * @version 1.0.5
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -54,32 +54,33 @@
   freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
   nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
   es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:2,
-  maxstatements:9, maxcomplexity:4 */
+  maxstatements:13, maxcomplexity:4 */
 
 /*global module */
 
 ;(function () {
   'use strict';
 
-  var ES = require('es-abstract/es6'),
-    s = require('white-space-x')(false, s),
-    pFunctionToString, pMatch, reName, getFnName;
+  var isFunction = require('is-function-x');
+  var getFnName;
 
   if ((function test() {}).name !== 'test') {
-    pFunctionToString = Function.prototype.toString;
-    pMatch = String.prototype.match;
-    reName = [
-      new RegExp(
-        '^[' + s + ']*function[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*\\(',
-        'i'
-      )
-    ];
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+    var fToString = Function.prototype.toString;
+    var pMatch = String.prototype.match;
+    var pReplace = String.prototype.replace;
+    var s = require('white-space-x')(false, true);
+    var reName = new RegExp(
+      '^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s +
+        ']+([\\w\\$]+)[' + s + ']*',
+      'i'
+    );
     getFnName = function getName(fn) {
-      var name = ES.Call(pMatch, ES.Call(pFunctionToString, fn), reName);
-      if (name) {
-        name = name[1];
-      }
-      return name && name !== 'anonymous' ? name : '';
+      var name = pMatch.call(
+        pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '),
+        reName
+      );
+      return name && name[1] !== 'anonymous' ? name[1] : '';
     };
   } else {
     /*jshint evil:true */
@@ -106,10 +107,12 @@
    * getFunctionName({ name: 'abc' }); // undefined
    * getFunctionName(function () {}); // ''
    * getFunctionName(new Function ()); // ''
-   * getFunctionName(function test() {}); // 'test'
+   * getFunctionName(function test1() {}); // 'test1'
+   * getFunctionName(function* test2() {}); // 'test2'
+   * getFunctionName(class Test {}); // 'Test'
    */
   module.exports = function getFunctionName(fn) {
-    if (!ES.IsCallable(fn)) {
+    if (!isFunction(fn)) {
       return;
     }
     return getFnName ? getFnName(fn) : fn.name;

@@ -41,7 +41,7 @@ es5-shim.js to be able to work properly.
 `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
 behave as closely as possible to ECMAScript 6 (Harmony).
 
-**Version**: 1.0.4  
+**Version**: 1.0.5  
 **Author:** Xotic750 <Xotic750@gmail.com>  
 **License**: [MIT](&lt;https://opensource.org/licenses/MIT&gt;)  
 **Copyright**: Xotic750  
@@ -69,5 +69,7 @@ getFunctionName(true); // undefined
 getFunctionName({ name: 'abc' }); // undefined
 getFunctionName(function () {}); // ''
 getFunctionName(new Function ()); // ''
-getFunctionName(function test() {}); // 'test'
+getFunctionName(function test1() {}); // 'test1'
+getFunctionName(function* test2() {}); // 'test2'
+getFunctionName(class Test {}); // 'Test'
 ```

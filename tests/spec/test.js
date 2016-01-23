@@ -4,7 +4,7 @@
   freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
   nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
   es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:2,
-  maxstatements:11, maxcomplexity:3 */
+  maxstatements:14, maxcomplexity:4 */
 
 /*global JSON:true, expect, module, require, describe, it, returnExports */
 
@@ -56,7 +56,7 @@
             /*fum*/function/*foo*/ // blah
             test8/*bar*/ // wizz
             (/*baz*/
-             ){},
+             ){}
           ],
           expected = [
             'Object',
@@ -83,15 +83,22 @@
       var fat;
       try {
         /*jshint evil:true */
-        fat = eval('(0,() => {return this})');
+        fat = new Function('return () => {return this;};')();
         expect(getFunctionName(fat)).toBe('');
       } catch (ignore) {}
 
       var gen;
       try {
         /*jshint evil:true */
-        gen = eval('(0,function* idMaker(){})');
+        gen = new Function('return function* idMaker(){};')();
         expect(getFunctionName(gen)).toBe('idMaker');
+      } catch (ignore) {}
+
+      var classes;
+      try {
+        /*jshint evil:true */
+        classes = new Function('"use strict"; return class My {};')();
+        expect(getFunctionName(classes)).toBe('My');
       } catch (ignore) {}
     });
   });
