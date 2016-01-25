@@ -1,6 +1,6 @@
 {
   "name": "get-function-name-x",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "getFunctionName module. Returns the name of the function.",
   "homepage": "https://github.com/Xotic750/get-function-name-x",
   "author": {
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "is-function-x": "^1.0.2",
-    "white-space-x": "^1.0.5"
+    "white-space-x": "^1.0.6"
   },
   "devDependencies": {
     "es5-shim": "^4.5.0",
