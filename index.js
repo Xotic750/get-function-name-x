@@ -41,53 +41,53 @@
  * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
  * behave as closely as possible to ECMAScript 6 (Harmony).
  *
- * @version 1.0.11
+ * @version 1.1.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
  * @module get-function-name-x
  */
 
-/*jslint maxlen:80, es6:false, white:true */
+/* jslint maxlen:80, es6:true, white:true */
 
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:2,
-  maxstatements:13, maxcomplexity:4 */
+/* jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
+   freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
+   nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
+   es3:false, esnext:true, plusplus:true, maxparams:1, maxdepth:1,
+   maxstatements:3, maxcomplexity:2 */
 
-/*global module */
+/* eslint strict: 1, max-statements: 1, func-style: 1, no-new-func: 1 */
 
-;(function () {
+/* global module */
+
+;(function () { // eslint-disable-line no-extra-semi
+
   'use strict';
 
   var isFunction = require('is-function-x');
   var getFnName;
+  function test1() {}
+  if (test1.name === 'test1') {
+    /* jshint evil:true */
+    var test2 = new Function();
+    if (test2.name === 'anonymous') {
+      getFnName = function (fn) {
+        return fn.name && fn.name !== 'anonymous' ? fn.name : '';
+      };
+    }
 
-  if ((function test() {}).name !== 'test') {
+  } else {
     var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
     var fToString = Function.prototype.toString;
     var pMatch = String.prototype.match;
     var pReplace = String.prototype.replace;
     var s = require('white-space-x').ws;
-    var reName = new RegExp(
-      '^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*',
-      'i'
-    );
-    getFnName = function getName(fn) {
-      var name = pMatch.call(
-        pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '),
-        reName
-      );
+    var x = '^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*';
+    var reName = new RegExp(x, 'i');
+    getFnName = function (fn) {
+      var name = pMatch.call(pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '), reName);
       return name && name[1] !== 'anonymous' ? name[1] : '';
     };
-  } else {
-    /*jshint evil:true */
-    if ((new Function()).name === 'anonymous') {
-      getFnName = function getName(fn) {
-        return fn.name && fn.name !== 'anonymous' ? fn.name : '';
-      };
-    }
   }
   /**
    * This method returns the name of the function, or `undefined` if not
@@ -112,7 +112,7 @@
    */
   module.exports = function getFunctionName(fn) {
     if (!isFunction(fn)) {
-      return;
+      return void 0;
     }
     return getFnName ? getFnName(fn) : fn.name;
   };
