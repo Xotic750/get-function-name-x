@@ -1,15 +1,7 @@
-/* jslint maxlen:80, es6:true, white:true */
-
-/* jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-   freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-   nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-   es3:false, esnext:true, plusplus:true, maxparams:1, maxdepth:2,
-   maxstatements:12, maxcomplexity:4 */
-
 /* eslint strict: 1, max-lines: 1, symbol-description: 1, max-nested-callbacks: 1,
    max-statements: 1, no-new-func: 1 */
 
-/* global JSON:true, expect, module, require, describe, it, returnExports */
+/* global JSON:true, expect, module, require, describe, it, xit, returnExports */
 
 ;(function () { // eslint-disable-line no-extra-semi
 
@@ -29,6 +21,42 @@
     getFunctionName = returnExports;
   }
 
+  var getFat = function getFatFunc() {
+    try {
+      return new Function('return () => {return this;};')();
+    } catch (ignore) {}
+    return false;
+  };
+
+  var ifSupportsFatit = getFat() ? it : xit;
+
+  var getGF = function getGeneratoFunc() {
+    try {
+      return new Function('return function* idMaker(){};')();
+    } catch (ignore) {}
+    return false;
+  };
+
+  var ifSupportsGFit = getGF() ? it : xit;
+
+  var getC = function getClassFunc() {
+    try {
+      return new Function('"use strict"; return class My {};')();
+    } catch (ignore) {}
+    return false;
+  };
+
+  var ifSupportsCit = getC() ? it : xit;
+
+  var getAF = function getAsyncFunc() {
+    try {
+      return new Function('return async function wait() {}')();
+    } catch (ignore) {}
+    return false;
+  };
+
+  var ifSupportsAFit = getAF() ? it : xit;
+
   describe('Basic tests', function () {
     it('should return `undefined` for everything', function () {
       var values = [true, 'abc', 1, null, undefined, new Date(), [], /r/];
@@ -40,70 +68,67 @@
 
     it('should return a correct string for everything', function () {
       var values = [
-          Object,
-          String,
-          Boolean,
-          Number,
-          Array,
-          Function,
-          function () {},
-          function test() {},
-            /* jshint evil:true */
-          new Function(),
-            /* jshint evil:false */
-          function test1() {},
-          function test2() {},
-          function test3() { },
-          function test4() { },
-          function/* foo*/test5() {},
-          function/* foo*/test6/* bar*/() {},
-          function/* foo*/test7/* bar*/(/* baz*/) {},
-          /* fum*/function/* foo*/ // blah
+        Object,
+        String,
+        Boolean,
+        Number,
+        Array,
+        Function,
+        function () {},
+        function test() {},
+        new Function(),
+        function test1() {},
+        function test2() {},
+        function test3() { },
+        function test4() { },
+        function/* foo*/test5() {},
+        function/* foo*/test6/* bar*/() {},
+        function/* foo*/test7/* bar*/(/* baz*/) {},
+        /* fum*/function/* foo*/ // blah
             test8(/* baz*/
              ) {}
-        ],
-        expected = [
-          'Object',
-          'String',
-          'Boolean',
-          'Number',
-          'Array',
-          'Function',
-          '',
-          'test',
-          '',
-          'test1',
-          'test2',
-          'test3',
-          'test4',
-          'test5',
-          'test6',
-          'test7',
-          'test8'
-        ],
-        actual = values.map(getFunctionName);
+      ];
+      var expected = [
+        'Object',
+        'String',
+        'Boolean',
+        'Number',
+        'Array',
+        'Function',
+        '',
+        'test',
+        '',
+        'test1',
+        'test2',
+        'test3',
+        'test4',
+        'test5',
+        'test6',
+        'test7',
+        'test8'
+      ];
+      var actual = values.map(getFunctionName);
       expect(actual).toEqual(expected);
+    });
 
-      var fat;
-      try {
-        /* jshint evil:true */
-        fat = new Function('return () => {return this;};')();
-        expect(getFunctionName(fat)).toBe('');
-      } catch (ignore) {}
+    ifSupportsFatit('should return a correct string for everything', function () {
+      var fat = getFat();
+      expect(getFunctionName(fat)).toBe('');
+    });
 
-      var gen;
-      try {
-        /* jshint evil:true */
-        gen = new Function('return function* idMaker(){};')();
-        expect(getFunctionName(gen)).toBe('idMaker');
-      } catch (ignore) {}
+    ifSupportsGFit('should return a correct string for everything', function () {
+      var gen = getGF();
+      expect(getFunctionName(gen)).toBe('idMaker');
+    });
 
-      var classes;
-      try {
-        /* jshint evil:true */
-        classes = new Function('"use strict"; return class My {};')();
-        expect(getFunctionName(classes)).toBe('My');
-      } catch (ignore) {}
+    ifSupportsAFit('should return a correct string for everything', function () {
+      var classes = getAF();
+      expect(getFunctionName(classes)).toBe('wait');
+    });
+
+    ifSupportsCit('should return a correct string for everything', function () {
+      var classes = getC();
+      expect(getFunctionName(classes)).toBe('My');
     });
   });
 }());

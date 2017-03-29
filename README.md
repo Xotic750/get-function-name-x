@@ -25,7 +25,7 @@ alt="npm version" height="18">
 
 Get the name of the function.
 
-**Version**: 1.1.1  
+**Version**: 1.2.0  
 **Author**: Xotic750 <Xotic750@gmail.com>  
 **License**: [MIT](&lt;https://opensource.org/licenses/MIT&gt;)  
 **Copyright**: Xotic750  

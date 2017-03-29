@@ -24,7 +24,7 @@
  *
  * Get the name of the function.
  *
- * @version 1.1.1
+ * @version 1.2.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -41,8 +41,8 @@
 
   var isFunction = require('is-function-x');
   var getFnName;
-  function test1() {}
-  if (test1.name === 'test1') {
+  var t = function test1() {};
+  if (t.name === 'test1') {
     /* jshint evil:true */
     var test2 = new Function();
     if (test2.name === 'anonymous') {
