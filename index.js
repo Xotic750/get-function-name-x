@@ -1,6 +1,6 @@
 /**
  * @file Get the name of the function.
- * @version 2.0.1
+ * @version 2.0.3
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -9,48 +9,31 @@
 
 'use strict';
 
-var isFunctionLike;
-try {
-  // eslint-disable-next-line no-new-func
-  new Function('"use strict"; return class My {};')();
-  isFunctionLike = function _isFunctionLike(value) {
-    return typeof value === 'function';
-  };
-} catch (ignore) {
-  isFunctionLike = require('is-function-x');
-}
+var isFunction = require('is-function-x');
 
 var getFnName;
 var t = function test1() {};
 if (t.name === 'test1') {
   // eslint-disable-next-line no-new-func
-  var test2 = new Function();
-  if (test2.name === 'anonymous') {
-    getFnName = function getName(fn) {
-      return fn.name === 'anonymous' ? '' : fn.name;
-    };
-  } else {
-    getFnName = function getName(fn) {
-      return fn.name;
-    };
-  }
+  var createsAnonymous = Function().name === 'anonymous';
+  getFnName = function _getName(fn) {
+    return createsAnonymous && fn.name === 'anonymous' ? '' : fn.name;
+  };
 } else {
-  var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+  var replaceComments = require('replace-comments-x');
   var fToString = Function.prototype.toString;
-  var s = require('white-space-x').string;
-  var x = '^[' + s + ']*(?:async)?[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*';
+  var normalise = require('normalize-space-x');
+  var x = '^(?:async )?(?:function|class) ?(?:\\* )?([\\w\\$]+)';
   var reName = new RegExp(x, 'i');
   getFnName = function getName(fn) {
     var match;
     try {
-      var str = fToString.call(fn).replace(STRIP_COMMENTS, ' ');
-      match = str.match(reName);
-    } catch (e) {}
-
-    if (match) {
-      var name = match[1];
-      return name === 'anonymous' ? '' : name;
-    }
+      match = normalise(replaceComments(fToString.call(fn), ' ')).match(reName);
+      if (match) {
+        var name = match[1];
+        return name === 'anonymous' ? '' : name;
+      }
+    } catch (ignore) {}
 
     return '';
   };
@@ -78,9 +61,5 @@ if (t.name === 'test1') {
  * getFunctionName(class Test {}); // 'Test'
  */
 module.exports = function getFunctionName(fn) {
-  if (isFunctionLike(fn) === false) {
-    return void 0;
-  }
-
-  return getFnName ? getFnName(fn) : fn.name;
+  return isFunction(fn, true) ? getFnName(fn) : void 0;
 };
