@@ -1,6 +1,6 @@
 /**
  * @file Get the name of the function.
- * @version 2.0.3
+ * @version 2.0.4
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -23,8 +23,7 @@ if (t.name === 'test1') {
   var replaceComments = require('replace-comments-x');
   var fToString = Function.prototype.toString;
   var normalise = require('normalize-space-x');
-  var x = '^(?:async )?(?:function|class) ?(?:\\* )?([\\w\\$]+)';
-  var reName = new RegExp(x, 'i');
+  var reName = /^(?:async )?(?:function|class) ?(?:\* )?([\w$]+)/i;
   getFnName = function getName(fn) {
     var match;
     try {
