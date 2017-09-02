@@ -1,6 +1,6 @@
 /**
  * @file Get the name of the function.
- * @version 2.0.4
+ * @version 2.0.5
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -11,12 +11,12 @@
 
 var isFunction = require('is-function-x');
 
-var getFnName;
+var getName;
 var t = function test1() {};
 if (t.name === 'test1') {
   // eslint-disable-next-line no-new-func
   var createsAnonymous = Function().name === 'anonymous';
-  getFnName = function _getName(fn) {
+  getName = function _getName(fn) {
     return createsAnonymous && fn.name === 'anonymous' ? '' : fn.name;
   };
 } else {
@@ -24,7 +24,7 @@ if (t.name === 'test1') {
   var fToString = Function.prototype.toString;
   var normalise = require('normalize-space-x');
   var reName = /^(?:async )?(?:function|class) ?(?:\* )?([\w$]+)/i;
-  getFnName = function getName(fn) {
+  getName = function _getName(fn) {
     var match;
     try {
       match = normalise(replaceComments(fToString.call(fn), ' ')).match(reName);
@@ -60,5 +60,5 @@ if (t.name === 'test1') {
  * getFunctionName(class Test {}); // 'Test'
  */
 module.exports = function getFunctionName(fn) {
-  return isFunction(fn, true) ? getFnName(fn) : void 0;
+  return isFunction(fn, true) ? getName(fn) : void 0;
 };
