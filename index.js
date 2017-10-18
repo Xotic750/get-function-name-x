@@ -1,6 +1,6 @@
 /**
  * @file Get the name of the function.
- * @version 2.0.5
+ * @version 2.1.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -10,24 +10,25 @@
 'use strict';
 
 var isFunction = require('is-function-x');
+var functionCtr = function () {}.constructor;
 
 var getName;
 var t = function test1() {};
 if (t.name === 'test1') {
-  // eslint-disable-next-line no-new-func
-  var createsAnonymous = Function().name === 'anonymous';
+  var createsAnonymous = functionCtr().name === 'anonymous';
   getName = function _getName(fn) {
     return createsAnonymous && fn.name === 'anonymous' ? '' : fn.name;
   };
 } else {
   var replaceComments = require('replace-comments-x');
-  var fToString = Function.prototype.toString;
-  var normalise = require('normalize-space-x');
+  var fToString = functionCtr.prototype.toString;
+  var normalise = require('normalize-space-x').normalizeSpace2018;
   var reName = /^(?:async )?(?:function|class) ?(?:\* )?([\w$]+)/i;
+  var stringMatch = require('cached-constructors-x').String.prototype.match;
   getName = function _getName(fn) {
     var match;
     try {
-      match = normalise(replaceComments(fToString.call(fn), ' ')).match(reName);
+      match = stringMatch.call(normalise(replaceComments(fToString.call(fn), ' ')), reName);
       if (match) {
         var name = match[1];
         return name === 'anonymous' ? '' : name;
