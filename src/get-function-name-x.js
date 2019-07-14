@@ -7,30 +7,32 @@
  * @module get-function-name-x
  */
 
-'use strict';
+const isFunction = require('is-function-x');
 
-var isFunction = require('is-function-x');
-var functionCtr = function () {}.constructor;
+const functionCtr = function() {}.constructor;
 
-var getName;
-var t = function test1() {};
+let getName;
+const t = function test1() {};
+
 if (t.name === 'test1') {
-  var createsAnonymous = functionCtr().name === 'anonymous';
+  const createsAnonymous = functionCtr().name === 'anonymous';
   getName = function _getName(fn) {
     return createsAnonymous && fn.name === 'anonymous' ? '' : fn.name;
   };
 } else {
-  var replaceComments = require('replace-comments-x');
-  var fToString = functionCtr.prototype.toString;
-  var normalise = require('normalize-space-x').normalizeSpace2018;
-  var reName = /^(?:async )?(?:function|class) ?(?:\* )?([\w$]+)/i;
-  var stringMatch = require('cached-constructors-x').String.prototype.match;
+  const replaceComments = require('replace-comments-x');
+  const fToString = functionCtr.prototype.toString;
+  const normalise = require('normalize-space-x').normalizeSpace2018;
+  const reName = /^(?:async )?(?:function|class) ?(?:\* )?([\w$]+)/i;
+  const stringMatch = require('cached-constructors-x').String.prototype.match;
   getName = function _getName(fn) {
-    var match;
+    let match;
     try {
       match = stringMatch.call(normalise(replaceComments(fToString.call(fn), ' ')), reName);
+
       if (match) {
-        var name = match[1];
+        const name = match[1];
+
         return name === 'anonymous' ? '' : name;
       }
     } catch (ignore) {}

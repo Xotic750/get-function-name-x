@@ -1,12 +1,13 @@
-'use strict';
+let getFunctionName;
 
-var getFunctionName;
 if (typeof module === 'object' && module.exports) {
   require('es5-shim');
   require('es5-shim/es5-sham');
+
   if (typeof JSON === 'undefined') {
     JSON = {};
   }
+
   require('json3').runInContext(null, JSON);
   require('es6-shim');
   getFunctionName = require('../../index.js');
@@ -14,90 +15,85 @@ if (typeof module === 'object' && module.exports) {
   getFunctionName = returnExports;
 }
 
-var getFat = function getFatFunc() {
+const getFat = function getFatFunc() {
   try {
     // eslint-disable-next-line no-new-func
     return new Function('return () => {return this;};')();
   } catch (ignore) {}
+
   return false;
 };
 
-var ifSupportsFatit = getFat() ? it : xit;
+const ifSupportsFatit = getFat() ? it : xit;
 
-var getGF = function getGeneratoFunc() {
+const getGF = function getGeneratoFunc() {
   try {
     // eslint-disable-next-line no-new-func
     return new Function('return function* idMaker(){};')();
   } catch (ignore) {}
+
   return false;
 };
 
-var ifSupportsGFit = getGF() ? it : xit;
+const ifSupportsGFit = getGF() ? it : xit;
 
-var getC = function getClassFunc() {
+const getC = function getClassFunc() {
   try {
     // eslint-disable-next-line no-new-func
     return new Function('"use strict"; return class My {};')();
   } catch (ignore) {}
+
   return false;
 };
 
-var ifSupportsCit = getC() ? it : xit;
+const ifSupportsCit = getC() ? it : xit;
 
-var getAF = function getAsyncFunc() {
+const getAF = function getAsyncFunc() {
   try {
     // eslint-disable-next-line no-new-func
     return new Function('return async function wait() {}')();
   } catch (ignore) {}
+
   return false;
 };
 
-var ifSupportsAFit = getAF() ? it : xit;
+const ifSupportsAFit = getAF() ? it : xit;
 
-describe('Basic tests', function () {
-  it('should return `undefined` for everything', function () {
-    var values = [
-      true,
-      'abc',
-      1,
-      null,
-      undefined,
-      new Date(),
-      [],
-      /r/
-    ];
+describe('basic tests', function() {
+  it('should return `undefined` for everything', function() {
+    const values = [true, 'abc', 1, null, undefined, new Date(), [], /r/];
 
-    var cb = function () {};
-    var expected = values.map(cb);
-    var actual = values.map(getFunctionName);
-    expect(actual).toEqual(expected);
+    const cb = function() {};
+
+    const expected = values.map(cb);
+    const actual = values.map(getFunctionName);
+    expect(actual).toStrictEqual(expected);
   });
 
-  it('should return a correct string for everything', function () {
-    var values = [
+  it('should return a correct string for everything', function() {
+    const values = [
       Object,
       String,
       Boolean,
       Number,
       Array,
       Function,
-      function () {},
+      function() {},
       function test() {},
       // eslint-disable-next-line no-new-func
       new Function(),
       function test1() {},
       function test2() {},
-      function test3() { },
-      function test4() { },
-      function/* foo*/test5() {},
-      function/* foo*/test6/* bar*/() {},
-      function/* foo*/test7/* bar*/(/* baz*/) {},
-      /* fum*/function/* foo*/ // blah
-      test8(/* baz*/
-      ) {}
+      function test3() {},
+      function test4() {},
+      function /* foo */ test5() {},
+      function /* foo */ test6 /* bar */() {},
+      function /* foo */ test7 /* bar */(/* baz */) {},
+      /* fum */ function /* foo */ // blah
+      test8 /* baz */() {},
     ];
 
-    var expected = [
+    const expected = [
       'Object',
       'String',
       'Boolean',
@@ -114,30 +110,30 @@ describe('Basic tests', function () {
       'test5',
       'test6',
       'test7',
-      'test8'
+      'test8',
     ];
 
-    var actual = values.map(getFunctionName);
-    expect(actual).toEqual(expected);
+    const actual = values.map(getFunctionName);
+    expect(actual).toStrictEqual(expected);
   });
 
-  ifSupportsFatit('should return a correct string for everything', function () {
-    var fat = getFat();
+  ifSupportsFatit('should return a correct string for everything', function() {
+    const fat = getFat();
     expect(getFunctionName(fat)).toBe('');
   });
 
-  ifSupportsGFit('should return a correct string for everything', function () {
-    var gen = getGF();
+  ifSupportsGFit('should return a correct string for everything', function() {
+    const gen = getGF();
     expect(getFunctionName(gen)).toBe('idMaker');
   });
 
-  ifSupportsAFit('should return a correct string for everything', function () {
-    var classes = getAF();
+  ifSupportsAFit('should return a correct string for everything', function() {
+    const classes = getAF();
     expect(getFunctionName(classes)).toBe('wait');
   });
 
-  ifSupportsCit('should return a correct string for everything', function () {
-    var classes = getC();
+  ifSupportsCit('should return a correct string for everything', function() {
+    const classes = getC();
     expect(getFunctionName(classes)).toBe('My');
   });
 });
