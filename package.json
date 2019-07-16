@@ -48,10 +48,10 @@
     "url": "https://github.com/Xotic750/get-function-name-x/issues"
   },
   "dependencies": {
-    "cached-constructors-x": "^2.0.5",
-    "is-function-x": "^4.0.9",
-    "normalize-space-x": "^4.0.18",
-    "replace-comments-x": "^3.0.6"
+    "cached-constructors-x": "^2.0.6",
+    "is-function-x": "^4.0.10",
+    "normalize-space-x": "^4.0.19",
+    "replace-comments-x": "^3.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",

@@ -7,7 +7,7 @@
  * @module get-function-name-x
  */
 
-const isFunction = require('is-function-x');
+import isFunction from 'is-function-x';
 
 const functionCtr = function() {}.constructor;
 
@@ -62,6 +62,6 @@ if (t.name === 'test1') {
  * getFunctionName(function* test2() {}); // 'test2'
  * getFunctionName(class Test {}); // 'Test'
  */
-module.exports = function getFunctionName(fn) {
+export default function getFunctionName(fn) {
   return isFunction(fn, true) ? getName(fn) : void 0;
-};
+}
