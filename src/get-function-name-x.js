@@ -26,7 +26,9 @@ if (t.name === 'test1') {
 
         return name === 'anonymous' ? '' : name;
       }
-    } catch (ignore) {}
+    } catch (ignore) {
+      // empty
+    }
 
     return '';
   };
