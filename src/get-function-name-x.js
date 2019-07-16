@@ -1,12 +1,3 @@
-/**
- * @file Get the name of the function.
- * @version 2.1.0
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module get-function-name-x
- */
-
 import isFunction from 'is-function-x';
 
 const functionCtr = function() {}.constructor;
@@ -48,19 +39,6 @@ if (t.name === 'test1') {
  * @param {Function} fn - The function to get the name of.
  * @returns {undefined|string} The name of the function,  or `undefined` if
  *  not a function.
- * @example
- * var getFunctionName = require('get-function-name-x');
- *
- * getFunctionName(); // undefined
- * getFunctionName(Number.MIN_VALUE); // undefined
- * getFunctionName('abc'); // undefined
- * getFunctionName(true); // undefined
- * getFunctionName({ name: 'abc' }); // undefined
- * getFunctionName(function () {}); // ''
- * getFunctionName(new Function ()); // ''
- * getFunctionName(function test1() {}); // 'test1'
- * getFunctionName(function* test2() {}); // 'test2'
- * getFunctionName(class Test {}); // 'Test'
  */
 export default function getFunctionName(fn) {
   return isFunction(fn, true) ? getName(fn) : void 0;
