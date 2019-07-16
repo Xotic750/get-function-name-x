@@ -21,38 +21,37 @@
 <a name="module_get-function-name-x"></a>
 
 ## get-function-name-x
+
 Get the name of the function.
 
-**Version**: 2.1.0  
-**Author**: Xotic750 <Xotic750@gmail.com>  
-**License**: [MIT](&lt;https://opensource.org/licenses/MIT&gt;)  
-**Copyright**: Xotic750  
 <a name="exp_module_get-function-name-x--module.exports"></a>
 
 ### `module.exports(fn)` ⇒ <code>undefined</code> \| <code>string</code> ⏏
+
 This method returns the name of the function, or `undefined` if not
 a function.
 
 **Kind**: Exported function  
-**Returns**: <code>undefined</code> \| <code>string</code> - The name of the function,  or `undefined` if
- not a function.  
+**Returns**: <code>undefined</code> \| <code>string</code> - The name of the function, or `undefined` if
+not a function.
 
-| Param | Type | Description |
-| --- | --- | --- |
-| fn | <code>function</code> | The function to get the name of. |
+| Param | Type                  | Description                      |
+| ----- | --------------------- | -------------------------------- |
+| fn    | <code>function</code> | The function to get the name of. |
 
-**Example**  
+**Example**
+
 ```js
-var getFunctionName = require('get-function-name-x');
+import getFunctionName from 'get-function-name-x';
 
-getFunctionName(); // undefined
-getFunctionName(Number.MIN_VALUE); // undefined
-getFunctionName('abc'); // undefined
-getFunctionName(true); // undefined
-getFunctionName({ name: 'abc' }); // undefined
-getFunctionName(function () {}); // ''
-getFunctionName(new Function ()); // ''
-getFunctionName(function test1() {}); // 'test1'
-getFunctionName(function* test2() {}); // 'test2'
-getFunctionName(class Test {}); // 'Test'
+console.log(getFunctionName()); // undefined
+console.log(getFunctionName(Number.MIN_VALUE)); // undefined
+console.log(getFunctionName('abc')); // undefined
+console.log(getFunctionName(true)); // undefined
+console.log(getFunctionName({name: 'abc'})); // undefined
+console.log(getFunctionName(function() {})); // ''
+console.log(getFunctionName(new Function())); // ''
+console.log(getFunctionName(function test1() {})); // 'test1'
+console.log(getFunctionName(function* test2() {})); // 'test2'
+console.log(getFunctionName(class Test {});) // 'Test'
 ```

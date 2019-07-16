@@ -1,23 +1,7 @@
-let getFunctionName;
-
-if (typeof module === 'object' && module.exports) {
-  require('es5-shim');
-  require('es5-shim/es5-sham');
-
-  if (typeof JSON === 'undefined') {
-    JSON = {};
-  }
-
-  require('json3').runInContext(null, JSON);
-  require('es6-shim');
-  getFunctionName = require('../../index.js');
-} else {
-  getFunctionName = returnExports;
-}
+import getFunctionName from '../src/get-function-name-x';
 
 const getFat = function getFatFunc() {
   try {
-    // eslint-disable-next-line no-new-func
     return new Function('return () => {return this;};')();
   } catch (ignore) {
     // empty
@@ -30,7 +14,6 @@ const ifSupportsFatit = getFat() ? it : xit;
 
 const getGF = function getGeneratoFunc() {
   try {
-    // eslint-disable-next-line no-new-func
     return new Function('return function* idMaker(){};')();
   } catch (ignore) {
     // empty
@@ -43,7 +26,6 @@ const ifSupportsGFit = getGF() ? it : xit;
 
 const getC = function getClassFunc() {
   try {
-    // eslint-disable-next-line no-new-func
     return new Function('"use strict"; return class My {};')();
   } catch (ignore) {
     // empty
@@ -56,7 +38,6 @@ const ifSupportsCit = getC() ? it : xit;
 
 const getAF = function getAsyncFunc() {
   try {
-    // eslint-disable-next-line no-new-func
     return new Function('return async function wait() {}')();
   } catch (ignore) {
     // empty
@@ -90,7 +71,6 @@ describe('basic tests', function() {
       Function,
       function() {},
       function test() {},
-      // eslint-disable-next-line no-new-func
       new Function(),
       function test1() {},
       function test2() {},

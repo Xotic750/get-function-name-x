@@ -1,6 +1,6 @@
 {
   "name": "get-function-name-x",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Get the name of the function.",
   "homepage": "https://github.com/Xotic750/get-function-name-x",
   "author": {
@@ -48,7 +48,6 @@
     "url": "https://github.com/Xotic750/get-function-name-x/issues"
   },
   "dependencies": {
-    "cached-constructors-x": "^2.0.6",
     "is-function-x": "^4.0.10",
     "normalize-space-x": "^4.0.19",
     "replace-comments-x": "^3.0.7"
