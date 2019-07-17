@@ -44,9 +44,11 @@ if (t.name === 'test1') {
  */
 
 
-export default function getFunctionName(fn) {
+var getFunctionName = function getFunctionName(fn) {
   /* eslint-disable-next-line no-void */
   return isFunction(fn, true) ? $getName(fn) : void 0;
-}
+};
+
+export default getFunctionName;
 
 //# sourceMappingURL=get-function-name-x.esm.js.map

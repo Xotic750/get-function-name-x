@@ -44,7 +44,9 @@ if (t.name === 'test1') {
  * @returns {undefined|string} The name of the function,  or `undefined` if
  *  not a function.
  */
-export default function getFunctionName(fn) {
+const getFunctionName = function getFunctionName(fn) {
   /* eslint-disable-next-line no-void */
   return isFunction(fn, true) ? $getName(fn) : void 0;
-}
+};
+
+export default getFunctionName;
