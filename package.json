@@ -1,6 +1,6 @@
 {
   "name": "get-function-name-x",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Get the name of the function.",
   "homepage": "https://github.com/Xotic750/get-function-name-x",
   "author": {
@@ -48,9 +48,9 @@
     "url": "https://github.com/Xotic750/get-function-name-x/issues"
   },
   "dependencies": {
-    "is-function-x": "^4.0.17",
-    "normalize-space-x": "^4.0.26",
-    "replace-comments-x": "^3.0.14"
+    "is-function-x": "^4.0.18",
+    "normalize-space-x": "^4.0.27",
+    "replace-comments-x": "^3.0.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
