@@ -1,6 +1,6 @@
 {
   "name": "get-function-name-x",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Get the name of the function.",
   "homepage": "https://github.com/Xotic750/get-function-name-x",
   "author": {
@@ -21,6 +21,7 @@
   ],
   "module": "dist/get-function-name-x.esm.js",
   "main": "dist/get-function-name-x.js",
+  "jsdelivr": "dist/get-function-name-x.min.js",
   "scripts": {
     "build:esm": "mkdirp dist && babel -s true --env-name esm src/get-function-name-x.js -o dist/get-function-name-x.esm.js",
     "build:base": "webpack --bail --progress --profile --colors",
@@ -48,9 +49,9 @@
     "url": "https://github.com/Xotic750/get-function-name-x/issues"
   },
   "dependencies": {
-    "is-function-x": "^4.0.21",
-    "normalize-space-x": "^4.0.31",
-    "replace-comments-x": "^3.0.18"
+    "is-function-x": "^4.0.23",
+    "normalize-space-x": "^4.0.33",
+    "replace-comments-x": "^3.0.20"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -88,7 +89,7 @@
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.13.6",
-    "eslint-plugin-jsdoc": "^15.7.1",
+    "eslint-plugin-jsdoc": "^15.7.2",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-lodash": "^5.1.0",
     "eslint-plugin-no-use-extend-native": "^0.4.1",
