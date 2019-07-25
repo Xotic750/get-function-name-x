@@ -2,13 +2,13 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2015-2017",
-  "date": "2019-07-24T17:01:06.657Z",
+  "date": "2019-07-25T22:36:31.876Z",
   "describe": "",
   "description": "Get the name of the function.",
   "file": "get-function-name-x.js",
   "hash": "fec2a4526cf01e234118",
   "license": "MIT",
-  "version": "3.0.9"
+  "version": "3.0.10"
 }
 */
 (function webpackUniversalModuleDefinition(root, factory) {
