@@ -1,6 +1,6 @@
 {
   "name": "get-function-name-x",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "Get the name of the function.",
   "homepage": "https://github.com/Xotic750/get-function-name-x",
   "author": {
@@ -49,9 +49,9 @@
     "url": "https://github.com/Xotic750/get-function-name-x/issues"
   },
   "dependencies": {
-    "is-function-x": "^4.0.27",
-    "normalize-space-x": "^4.0.37",
-    "replace-comments-x": "^3.0.24"
+    "is-function-x": "^4.0.28",
+    "normalize-space-x": "^4.0.38",
+    "replace-comments-x": "^3.0.25"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -63,7 +63,7 @@
     "@babel/runtime": "^7.5.5",
     "@types/jest": "^24.0.16",
     "@types/node": "^12.6.8",
-    "@xotic750/eslint-config-recommended": "^1.0.4",
+    "@xotic750/eslint-config-recommended": "^1.0.5",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
