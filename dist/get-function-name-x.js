@@ -2,7 +2,7 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2015-2017",
-  "date": "2019-09-05T20:10:22.720Z",
+  "date": "2020-01-30T23:11:35.867Z",
   "describe": "",
   "description": "Get the name of the function.",
   "file": "get-function-name-x.js",
